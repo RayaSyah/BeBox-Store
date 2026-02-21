@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: bebox2-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: bebox_db
+      MYSQL_USER: bebox_user
+      MYSQL_PASSWORD: bebox_pass
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database.sql:/docker-entrypoint-initdb.d/01-database.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot123"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  app:
+    build:
+      context: .
+      dockerfile: dockerfile
+    container_name: bebox2-app
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DB_HOST: mysql
+      DB_USER: bebox_user
+      DB_PASS: bebox_pass
+      DB_NAME: bebox_db
+      BASE_URL: http://localhost:8080
+    volumes:
+      - app_uploads:/var/www/html/uploads
+
+volumes:
+  mysql_data:
+  app_uploads:

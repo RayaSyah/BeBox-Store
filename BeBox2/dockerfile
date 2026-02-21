@@ -1,0 +1,44 @@
+FROM ubuntu:22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Asia/Jakarta
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    nginx \
+    php8.1 \
+    php8.1-fpm \
+    php8.1-mysql \
+    php8.1-gd \
+    php8.1-mbstring \
+    php8.1-xml \
+    php8.1-curl \
+    php8.1-zip \
+    php8.1-opcache \
+    supervisor \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Buat direktori yang dibutuhkan
+RUN mkdir -p /var/log/supervisor \
+    && mkdir -p /var/www/html/uploads/avatars \
+    && mkdir -p /run/php
+
+# Copy semua file aplikasi
+COPY . /var/www/html
+
+WORKDIR /var/www/html
+
+# Set permissions
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html \
+    && chmod -R 777 /var/www/html/uploads
+
+# Copy config files
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY php-custom.ini /etc/php/8.1/fpm/conf.d/99-custom.ini
+
+EXPOSE 8080
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
