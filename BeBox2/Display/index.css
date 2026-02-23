@@ -1,0 +1,127 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-image: url('../Picture/login.jpeg'); /* Ganti dengan URL gambar Anda atau path lokal */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #fff;
+    box-sizing: border-box;
+}
+
+.login-container {
+    background-color: rgba(90, 90, 90, 0.6); /* Abu-abu buram transparan */
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 350px;
+    text-align: center;
+    backdrop-filter: blur(5px); /* Efek buram pada background di belakang container */
+    -webkit-backdrop-filter: blur(5px); /* Untuk kompatibilitas Safari */
+}
+
+h2 {
+    margin-bottom: 30px;
+    color: #e0e0e0;
+    font-size: 28px;
+    letter-spacing: 1px;
+}
+
+.input-group {
+    margin-bottom: 25px;
+    text-align: left;
+    position: relative; /* Untuk posisi pesan validasi */
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #c0c0c0;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.input-group input {
+    width: calc(100% - 20px);
+    padding: 12px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.2); /* Input transparan */
+    color: #fff;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.input-group input:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Styling untuk validasi bawaan browser */
+.input-group input:invalid + .validation-message {
+    display: block;
+    color: #ffdddd; /* Warna merah muda untuk pesan kesalahan */
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.validation-message {
+    display: none; /* Sembunyikan secara default */
+    color: #fff; /* Warna default jika tidak invalid */
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #000000; /* Warna hitam untuk tombol Sign In */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #333333; /* Warna hitam lebih gelap saat hover */
+}
+
+.register-text {
+    margin-top: 25px;
+    color: #e0e0e0;
+    font-size: 14px;
+}
+
+.register-text a {
+    color: #007bff; /* Warna biru untuk link Create an account */
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.register-text a:hover {
+    color: #0056b3; /* Warna biru lebih gelap saat hover */
+    text-decoration: underline;
+}
+
+/* Responsif sederhana */
+@media (max-width: 480px) {
+    .login-container {
+        width: 90%;
+        padding: 30px 20px;
+    }
+    h2 {
+        font-size: 24px;
+    }
+}
